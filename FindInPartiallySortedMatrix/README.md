@@ -1,11 +1,9 @@
 # FindInPartiallySortedMatrix #
 
-## 写在前面： ##
-2016.12.07开始刷题模式，掌握基础算法的同时学习巩固C++和Python编程基础,每道算法题我会尽量用两种语言去实现。目前是从剑指offer（牛客网）开始，欢迎同道中人共同学习，批评指正。本地测试代码和笔记会更新在我的github上[Coding_Algorithms](https://github.com/zhenghuangcheng/Coding_Algorithms)。
 #### 题目一: ####
 > 在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 
-#### 解答: ####
+#### 解答（C++）: ####
 
     bool Find(int target, vector<vector<int> > array) {
     int rows, columns, x, y;
@@ -37,3 +35,7 @@
 > 
 > 此外，编译遇到一些小问题，在VS2015中编译、运行成功的代码在g++编译时出错，问题出在**nullptr**。解决方法是g++编译命令需要加上C++11版本：`g++ -std=c++11 FindInPartiallySortedMatrix.cpp -o test` 。  
 > 还有string Name值作为参数传入方法中（char* Name）会出警告` warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]`，解决方法将参数改为：`const char* testName`。
+
+#### AC ####
+
+![](http://i.imgur.com/qqGnahL.png)
