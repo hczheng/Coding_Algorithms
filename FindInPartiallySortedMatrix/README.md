@@ -28,8 +28,34 @@
 	return false;     
     }
 
+
+#### 解答（Python）: ####
+ 
+    # -*- coding:utf-8 -*-
+    class Solution:
+    # array 二维列表
+    def Find(self, target, array):
+        # write code here
+        rows = len(array)
+        columns = len(array[0])
+        x = rows - 1
+        y = 0 
+        while x >=0 and y <=columns-1:
+            if array[x][y]>target:
+                x -= 1
+            elif array[x][y]<target:
+                y += 1
+            else:
+                return True
+            
+        return False   
+ 
+    print Solution().Find(5,[[5,2,1]])
+
+
+
 #### 笔记: ####
-> 这道题思路倒不难，从左下角开始遍历，如果当前值大于目标值则上移，当前值小于目标值则下移，最坏时间复杂度为O(M+N),M×N的矩阵。
+> 这道题思路倒不难，从左下角开始遍历，如果当前值大于目标值则上移，当前值小于目标值则下移，最坏时间复杂度为O(M+N),M×N的矩阵。另外，加上二分查找理论上应该可以更快一点。
 > 
 > 本地测试的时候vector数组初始化折腾了一会，之前没接触过vector，以为可以像C-style二维数组那样直接初始化，然而并不行。最后找到这个[教程](http://blog.csdn.net/zsuguangh/article/details/6135529 )，实现了循环初始化，同时学习了vector的优点（）。首先，数组的越界可能会引起程序的崩溃，其次是动态性不好，包括动态改变大小，动态申请。
 > 
@@ -39,3 +65,4 @@
 #### AC ####
 
 ![](http://i.imgur.com/qqGnahL.png)
+
