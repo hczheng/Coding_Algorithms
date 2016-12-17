@@ -2,13 +2,10 @@
 class Solution:
     def Fibonacci(self, n):
         # write code here
-        a=[0,1,1]
-        if(n<3):
-            return a[n]
-        for i in range(3,n+1):
-            a.append(a[i-2]+a[i-1])
-        return a[n]
+        f = 0
+        g = 1
+        for i in range(n):
+            f,g = g,f+g
+        return f
 		
 print Solution().Fibonacci(10)
-
-
