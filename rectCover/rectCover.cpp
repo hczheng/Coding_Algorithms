@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 {
 	Solution so;
 	int a;
-	cout<<"请输入台阶数的参数."<<endl;
+	cout<<"请输入n."<<endl;
 	cin>>a;
 	printf("f(%d)=%d", a,so.rectCover(a));
 	getchar();
