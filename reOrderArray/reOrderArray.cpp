@@ -1,5 +1,3 @@
-//g++ -std=c++11 Fibonacci.cpp -o Fibonacci  //about compile
-// test.cpp : 定义控制台应用程序的入口点。
 #include <stdio.h>
 #include <iostream>
 #include<vector>
