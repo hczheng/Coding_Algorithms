@@ -34,13 +34,13 @@
     public:
 	ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
 	{
-		ListNode* pResult = NULL;
-		ListNode* current = NULL;
+		ListNode* pResult = NULL;//合并后链表的头指针
+		ListNode* current = NULL;//遍历指针
 
 		if (pHead1 == NULL)
-			return pHead2;
+			return pHead2;//list1为空，直接返回list2
 		if (pHead2 == NULL)
-			return pHead1;
+			return pHead1;//list2为空，直接返回list1
 		while (pHead1 != NULL && pHead2 != NULL) {
 			if (pHead1->val <= pHead2->val) {
 				if (pResult == NULL) {
