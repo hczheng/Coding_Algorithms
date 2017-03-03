@@ -1,0 +1,46 @@
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};*/
+ 
+class TreePrinter {
+public:
+    vector<vector<int> > printTree(TreeNode* root) 
+    {
+        // write code here
+        TreeNode* last=root;
+        TreeNode* nlast = root;
+        queue<TreeNode*> myQue;
+        vector<vector<int> > tree;
+        vector<int> tmp;
+        myQue.push(root);
+        while(!myQue.empty())
+        {
+            tmp.push_back(myQue.front()->val);
+            if(myQue.front()->left!=NULL)
+            {
+                myQue.push(myQue.front()->left);
+                nlast = myQue.front()->left;
+            }
+            if(myQue.front()->right!=NULL)
+            {
+                myQue.push(myQue.front()->right);
+                nlast = myQue.front()->right;
+             }
+            if(last == myQue.front())
+            {
+                tree.push_back(tmp);
+                tmp.clear();
+                last = nlast;
+            }
+            myQue.pop();
+        }
+         return tree;
+ 
+    }
+};

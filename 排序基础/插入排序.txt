@@ -1,0 +1,14 @@
+class InsertionSort {
+public:
+    int* insertionSort(int* A, int n) {
+        // write code here
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(A[i]<A[j]){
+                    swap(A[i],A[j]);
+                }
+            }
+        }
+        return A;
+    }
+};

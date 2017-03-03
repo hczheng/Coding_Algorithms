@@ -1,0 +1,61 @@
+#单向查找
+class QuickSort {
+public:
+    int* quickSort(int* A, int n) {
+        // write code here
+        if(n <= 1) return A;
+        subQuickSort(A, 0, n-1);
+        return A;
+    }
+private:
+    void subQuickSort(int* A, int start, int end) {
+        if(start < end) {
+            int flag = start;//保存划分点位置，初始为start
+            int i = end;
+            while(i > flag) {//默认从右往左遍历，划分点与当前最右边一个值比较
+                if(A[flag] > A[i]) {//如果当前最右边的值比切分点小
+                    swap(A[flag+1], A[i]);//先把当前最右的数与切分点下一位交换
+                    swap(A[flag+1], A[flag]);//再把切分点跟刚换到切分点下一位的值交换，这样切分点就右移了一位
+                    flag++;//小于切分点的范围扩大一位
+                }else{//如果当前最右边的值大于切分点
+                    i--;//继续从右往左遍历遍历
+                }
+            }
+            subQuickSort(A, start, flag-1);
+            subQuickSort(A, flag+1, end);
+        }
+    }
+};
+
+
+//双向查找
+class QuickSort {
+public:
+    int* quickSort(int* A, int n) {
+        // write code here
+        if(n <= 1) return A;
+        subQuickSort(A, 0, n-1);
+        return A;
+    }
+private:
+    void subQuickSort(int* A, int start, int end) {
+        if(start < end) {
+            int flag = A[start];//保存划分点值
+            int left = start;
+            int right = end;
+            while(left<right){
+                while(left<right&&A[right]>=flag)//从右往左找到第一个小于flag的元素
+                    right--;
+                if(left<right)
+                    A[left++]=A[right];//把找到的元素存到flag原先的位置
+                while(left<right&&A[left]<flag)//从左往右找到第一个大于flag的元素
+                    left++;
+                if(left<right)
+                    A[right--]=A[left];               
+            }
+            A[left]=flag;
+            subQuickSort(A, start, left-1);
+            subQuickSort(A, left+1, end);
+        }
+    }
+};

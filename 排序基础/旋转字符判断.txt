@@ -1,0 +1,14 @@
+class Rotation {
+public:
+    bool chkRotation(string A, int lena, string B, int lenb) {
+        // write code here
+        if(lena!=lenb) return false;      
+        string full=A+A;
+        /*
+        find()：在一个字符串中查找一个指定的单个字符或字符数组。
+        如果找到，就返回首次匹配的开始位置；如果没有查找到匹配的内容，就返回string::npos。
+        所以最后只需要判断结果是否为string::npos即可
+        */
+        return full.find(B)!=string::npos?true:false;     
+    }
+};
