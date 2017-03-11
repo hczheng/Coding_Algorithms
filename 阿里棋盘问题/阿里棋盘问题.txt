@@ -1,0 +1,201 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <math.h>
+#include <algorithm>
+#include <stdio.h>
+#define maxn 1000010
+
+using namespace std;
+
+// num 为棋盘大小：num*num
+// i0 为棋子起始行号（1~num）
+// j0 为棋子起始列号（1~num）
+// in 为棋子终止行号（1~num）
+// jn 为棋子终止列号（1~num）
+// step 为最大移动步数
+// data 为棋盘格子分数，data[i][j]为第(i-1)行，第(j-1)列的分数。
+// 返回值为获得的最大分数。如果无法移动到终止位置，则输出-1
+// path 为棋子最佳移动路线。如果有多条，则输出路径最短的一条。如果路径最短的有多条，则输出任意一条。初始位置和终止位置也需要输出。如果无法移动到终止位置，则不输出path
+int num=10;
+struct node{
+int a,b;
+struct node* father;
+vector<node*> child;
+};
+node* root;
+int score=0,maxm=-1;
+int depth=0,mind=maxn;
+vector< pair<int,int> > bpath;
+bool same(node* n1,node* n2){
+if(n1==NULL||n2==NULL){
+return false;
+}
+else{
+if(n1->a==n2->a&&n1->b==n2->b){
+return true;
+}
+else{
+return false;
+}
+}
+}
+bool dup(node* p){
+// printf("dup %d %d\n");
+node* t=p->father;
+while(t!=NULL){
+//   printf("same %d %d\n");
+if(same(p,t)==true){
+return true;
+}
+t=t->father;
+}
+return false;
+}
+bool judge(node* t){
+if(t->a>=0&&t->a<=num-1&&t->b>=0&&t->b<=num-1){
+return true;
+}
+else{
+return false;
+}
+}
+void dfs(node* root,node* goal,int step, const vector< vector<int> >& data, vector< pair<int,int> >& path){
+if(depth>step){
+return;
+}
+else if(depth<=step){
+if(same(root,goal)==true){
+//  printf("1 %d %d\n",depth,step);
+if(score>maxm){
+bpath=path;
+mind=depth;
+maxm=score;
+}
+else if(score==maxm){
+if(depth<mind){
+bpath=path;
+mind=depth;
+}
+
+}
+return;
+}
+else if(same(root,goal)==false){
+if(depth==step){
+//  printf("2 %d %d\n",depth,step);
+return;
+}
+
+else{
+//   printf("3 %d %d %d %d %d %d\n",depth,step,root->a,root->b,goal->a,goal->b);
+// printf("%d %d\n",i,j);
+int i=root->a,j=root->b;
+//   printf("%d %d\n",i+1,j+1);
+if(i>=1){
+//  printf("qqqqqqqqqqqqqq%d %d\n",i,j);
+node* current=new node;
+current->a=i-1;
+current->b=j;
+current->father=root;
+if(dup(current)==false)
+root->child.push_back(current);
+//  printf("aaaaaaaaaaa%d %d\n",i,j);
+}
+if(j>=1){
+//    printf("kkkkkkkkkkkkk%d %d\n",i,j);
+node* current=new node;
+current->father=root;
+current->a=i;
+current->b=j-1;
+if(dup(current)==false)
+root->child.push_back(current);
+}
+if(i<=num-2){
+// printf("aaaaaaaaaaaa%d %d\n",i,j);
+node* current=new node;
+current->father=root;
+current->a=i+1;
+current->b=j;
+//  printf("pppppppppp%d %d\n",i,j);
+if(dup(current)==false)
+root->child.push_back(current);
+//  printf("kkkkkkkkkkkkk%d %d\n",i,j);
+}
+if(j<=num-2){
+//  printf("pppppppppp%d %d\n",i,j);
+node* current=new node;
+current->father=root;
+current->a=i;
+current->b=j+1;
+if(dup(current)==false)
+root->child.push_back(current);
+}
+//   printf("%d %d %d\n",i,j,root->child.size());
+for(int k=0;k<root->child.size();++k){
+//  printf("%d %d %d\n",i,j,k);
+node* root1=root->child[k];
+depth++;
+score+=data[root1->a][root1->b];
+path.push_back(make_pair<int,int>(root1->a+1,root1->b+1));
+// printf("%d %d %d %d\n",score,depth,root1->a+1,root1->b+1);
+dfs(root->child[k],goal,step,data,path);
+depth--;
+score-=data[root1->a][root1->b];
+path.pop_back();
+}
+}
+}
+}
+}
+int FindPath(int num, int i0, int j0, int in, int jn, int step, const vector< vector<int> >& data, vector< pair<int,int> >& path)
+{
+if(abs(in-i0)+abs(jn-j0)>step){
+return -1;
+}
+else{
+node* root;
+node* goal;
+root=new node;
+goal=new node;
+root->a=i0-1;
+root->b=j0-1;
+goal->a=in-1;
+goal->b=jn-1;
+root->father=NULL;
+score=data[i0-1][j0-1];
+path.push_back(make_pair<int,int>(root->a+1,root->b+1));
+dfs(root,goal,step,data,path);
+return maxm;
+}
+}
+
+int main(int argc, char* argv[]){
+int step = 0;
+int i0 = 0;
+int j0 = 0;
+int in = 0;
+int jn = 0;
+vector< vector<int> > data(num);
+for (int i = 0; i < num; ++i) {
+data[i].resize(num);
+for (int j = 0; j < num; ++j) {
+cin >> data[i][j];
+}
+}
+cin >> i0 >> j0 >> in >> jn >> step;
+
+vector< pair<int,int> > path;
+int maxscore = FindPath(num, i0, j0, in, jn, step, data, path);
+
+cout << maxscore << endl;
+if (maxscore >= 0&&maxm>0) {
+for (int i = 0; i < bpath.size(); ++i) {
+if (i>0) cout << " ";
+cout << bpath[i].first << "," << bpath[i].second;
+}
+}
+cout << endl;
+
+return 0;
+}
